@@ -32,8 +32,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String readFromFile() {
         try {
-            Path path = Path.of(dataFilePath, dataFileName);
-            return Files.readString(path);
+            return Files.readString(Path.of(dataFilePath, dataFileName));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -44,6 +43,7 @@ public class FileServiceImpl implements FileService {
     public File getDataFile() {
         return new File(dataFilePath + "/" + dataFileName);
     }
+
     @Override
     public boolean cleanDataFile() {
         try {

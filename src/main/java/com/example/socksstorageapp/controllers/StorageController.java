@@ -39,6 +39,7 @@ public class StorageController {
             return ResponseEntity.ok(count);
         }
     }
+
     @PutMapping
     @Operation(summary = "Отправление носков со склада",
             description = "Можно отправить носки со склада")
@@ -79,25 +80,23 @@ public class StorageController {
 
     }
 
-    //@GetMapping
-    //    @Operation(summary = "Получение всех носков на складе", description = "Можно получить список всех носков")
-    //    public ResponseEntity<Object> getStorageMap() {
-    //        try {
-    //            Path path = storageServices.getSocksMap();
-    //            if (Files.size(path) == 0) {
-    //                return ResponseEntity.noContent().build();
-    //            }
-    //            InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
-    //            return ResponseEntity.ok()
-    //                    .contentType(MediaType.TEXT_PLAIN)
-    //                    .contentLength(Files.size(path))
-    //                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Socks.txt\"")
-    //                    .body(resource);
-    //
-    //        } catch (IOException e) {
-    //            e.printStackTrace();
-    //            return ResponseEntity.internalServerError().body(e.toString());
-    //        }
-    //
-    //    }
+    @GetMapping("/downloadAllSocks")
+    @Operation(summary = "Получение всех носков на складе", description = "Можно получить список всех носков")
+    public ResponseEntity<Object> getStorageMap() {
+        try {
+            Path path = storageServices.getSocksMap();
+            if (Files.size(path) == 0) {
+                return ResponseEntity.noContent().build();
+            }
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_PLAIN).contentLength(Files.size(path))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Socks.txt\"")
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.toString());
+        }
+
+    }
 }

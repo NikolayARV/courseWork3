@@ -82,6 +82,7 @@ public class StorageServicesImpl implements StorageServices {
         }
         return false;
     }
+
     private void saveToFile() {
         try {
             String json = new ObjectMapper().writeValueAsString(socksStorage);
@@ -94,16 +95,21 @@ public class StorageServicesImpl implements StorageServices {
     private void readFromFile() {
         try {
             String json = fileService.readFromFile();
-            socksStorage = new ObjectMapper().readValue(json, new TypeReference<Map<Socks, Long>>() {
-            });
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+            socksStorage = new ObjectMapper().readValue(json, new TypeReference<HashMap<Socks, Long>>(){
+        });
+    } catch(
+    JsonProcessingException e)
+
+    {
+        throw new RuntimeException(e);
     }
+
+}
+
     @Override
     public Path getSocksMap() throws IOException {
         Path path = fileService.createTempFile("Socks");
-        for (Map.Entry<Socks, Long> socks: socksStorage.entrySet()) {
+        for (Map.Entry<Socks, Long> socks : socksStorage.entrySet()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
                 writer.append("Цвет: " + socks.getKey().getColor() + ". ");
                 writer.append("\n");
@@ -112,6 +118,7 @@ public class StorageServicesImpl implements StorageServices {
                 writer.append("Содержание хлопка: " + socks.getKey().getCottonPart() + "%");
                 writer.append("\n");
                 writer.append("Количество на складе: " + socks.getValue() + " пар");
+                writer.append("\n");
             }
         }
         return path;

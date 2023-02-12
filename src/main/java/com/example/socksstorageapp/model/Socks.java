@@ -23,11 +23,11 @@ public class Socks {
     }
 
     @Override
-    public String toString() {
-        return "Носки: " +
-                "цвет " + color +
-                ", размер " + size +
-                ", состав " + cottonPart +
-                ". Количество на складе ";
-    }
+        public String toString() {
+            return "Носки: " +
+                    "цвет " + color +
+                    ", размер " + size +
+                    ", состав " + cottonPart +
+                    ". Количество на складе ";
+        }
 }
